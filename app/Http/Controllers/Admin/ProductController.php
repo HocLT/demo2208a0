@@ -51,7 +51,7 @@ class ProductController extends Controller
         $prod['image'] = $imageFilename;
         //dd($prod);
         Product::create($prod);
-        return redirect('/product');
+        return redirect()->route('admin.product.index');
     }
 
     /**
@@ -79,7 +79,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $prod = $request->all();
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $ext = $file->getClientOriginalExtension();
+            if ($ext != 'jpg' && $ext != 'jpeg' && $ext != 'png') {
+                $error = 1;
+                return view('admin.product.create', compact(error));
+            }
+            $imageFilename = $file->getClientOriginalName();
+            $file->move('images', $imageFilename);
+        } else {
+            $imageFilename = $product->image;
+        }
+
+        // thêm 1 phần tử mới vào mảng $prod
+        $prod['image'] = $imageFilename;
+        //dd($prod);
+        $product->update($prod);
+        return redirect()->route('admin.product.index');
     }
 
     /**

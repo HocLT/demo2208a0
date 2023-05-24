@@ -12,6 +12,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ Route('admin') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ Route('admin.product.index') }}">Products</a></li>
             <li class="breadcrumb-item active">Create Product</li>
           </ol>
         </div>
@@ -46,7 +47,7 @@
             </div>
             <div class="form-group">
               <label for="category">Category</label>
-              <select id="category" class="form-control custom-select" name="category">
+              <select id="category" class="form-control custom-select" name="category_id">
                 @foreach($cates as $item)
                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                 @endforeach
