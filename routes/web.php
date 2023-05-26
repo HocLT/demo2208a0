@@ -7,6 +7,9 @@ use App\Http\Controllers\FE\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/product/{slug}', [HomeController::class, 'productDetails'])
+            ->name('productDetails');
+
 Route::get('/login', [DashboardController::class, 'login'])->name('login');
 
 Route::post('/login', [DashboardController::class, 'processLogin'])

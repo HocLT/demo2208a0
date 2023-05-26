@@ -32,7 +32,7 @@
                   </div>
                   <!-- <h5>title</h5> -->
               </div>
-              <h5><a href="{{ Route('home') }}">{{ $item->name }}</a></h5>
+              <h5><a href="{{ Route('productDetails', $item->slug) }}">{{ $item->name }}</a></h5>
           </div>
       </div>
     @endforeach

@@ -49,6 +49,7 @@ class ProductController extends Controller
 
         // thêm 1 phần tử mới vào mảng $prod
         $prod['image'] = $imageFilename;
+        $prod['slug'] = \Str::slug($request->name);
         //dd($prod);
         Product::create($prod);
         return redirect()->route('admin.product.index');
@@ -96,6 +97,7 @@ class ProductController extends Controller
 
         // thêm 1 phần tử mới vào mảng $prod
         $prod['image'] = $imageFilename;
+        $prod['slug'] = \Str::slug($request->name);
         //dd($prod);
         $product->update($prod);
         return redirect()->route('admin.product.index');
