@@ -146,7 +146,7 @@
                                   <input type="text" value="1">
                               </div>
                           </div>
-                          <a href="#" class="primary-btn">add to cart</a>
+                          <a href="#" class="primary-btn" data-pid="{{ $prod->id }}">add to cart</a>
                       </div>
                       <div class="product__details__btns__option">
                           <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>
@@ -154,7 +154,7 @@
                       </div>
                       <div class="product__details__last__option">
                           <h5><span>Guaranteed Safe Checkout</span></h5>
-                          <img src="img/shop-details/details-payment.png" alt="">
+                          <img src="{{ asset('/fe/img/shop-details/details-payment.png') }}" alt="">
                           <ul>
                               <li><span>SKU:</span> 3812912</li>
                               <li><span>Categories:</span> Clothes</li>
@@ -440,4 +440,27 @@
   </div>
 </section>
 <!-- Related Section End -->
+@endsection
+
+@section('myjs')
+<script>
+    $('.product__details__cart__option a').click(function(e) {
+        e.preventDefault(); // không chạy phần link của thẻ a
+        let pid = $(this).data('pid');
+        let quantity = $('.product__details__cart__option .pro-qty input').val();
+        // send ajax request using jquery
+        let url = "{{ Route('addCart') }}";
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: {
+                pid: pid,
+                quantity: quantity,
+                _token: '{{ csrf_token() }}',
+            }, success: function(data) {
+                alert('Add product to cart successfully')
+            }
+        });
+    });
+</script>
 @endsection

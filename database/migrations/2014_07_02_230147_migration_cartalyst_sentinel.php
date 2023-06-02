@@ -32,7 +32,7 @@ class MigrationCartalystSentinel extends Migration
     public function up()
     {
         Schema::create('activations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('user_id')->unsigned();
             $table->string('code');
             $table->boolean('completed')->default(0);
@@ -95,7 +95,7 @@ class MigrationCartalystSentinel extends Migration
         });
 
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('email');
             $table->string('password');
             $table->text('permissions')->nullable();

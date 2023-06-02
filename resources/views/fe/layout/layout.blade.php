@@ -220,6 +220,7 @@
     <script src="{{ asset('/fe/js/mixitup.min.js') }}"></script>
     <script src="{{ asset('/fe/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('/fe/js/main.js') }}"></script>
+    @yield('myjs')
 </body>
 
 </html>

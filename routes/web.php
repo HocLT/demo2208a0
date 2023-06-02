@@ -17,6 +17,12 @@ Route::post('/login', [DashboardController::class, 'processLogin'])
 
 Route::get('/logout', [DashboardController::class, 'logout'])->name('logout');
 
+Route::post('/add-cart', [HomeController::class, 'addCart'])->name('addCart');
+
+Route::get('/view-cart', [HomeController::class, 'viewCart'])->name('viewCart');
+
+Route::get('/clear-cart', [HomeController::class, 'clearCart'])->name('clearCart');
+
 
 // y/c cần phải login
 Route::group(['middleware'=>'islogin'], function() {
