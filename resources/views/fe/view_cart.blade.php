@@ -66,7 +66,9 @@
                                 $total += $item->product->price * $item->quantity;
                                 @endphp
 
-                                <td class="cart__close"><i class="fa fa-close"></i></td>
+                                <td class="cart__close">
+                                    <a href="#" data-pid="{{ $item->product->id }}"><i class="fa fa-close"></i></a>
+                                </td>
                             </tr>
                           @endforeach
                           @endif
@@ -100,7 +102,7 @@
                         <li>Subtotal <span>{{ $total }}đ</span></li>
                         <li>Total <span>{{ $total }}đ</span></li>
                     </ul>
-                    <a href="#" class="primary-btn">Proceed to checkout</a>
+                    <a href="{{ Route('checkout') }}" class="primary-btn">Proceed to checkout</a>
                 </div>
             </div>
         </div>
@@ -122,17 +124,34 @@ $('.continue__btn.update__btn a').click(function(e) {
   });
   //alert(qties);
   let url = "{{ Route('updateCart') }}";
-        $.ajax({
-            type: 'post',
-            url: url,
-            data: {
-                pids: pids,
-                qties: qties,
-                _token: '{{ csrf_token() }}',
-            }, success: function(data) {
-                location.reload();
-            }
-        });
+    $.ajax({
+        type: 'post',
+        url: url,
+        data: {
+            pids: pids,
+            qties: qties,
+            _token: '{{ csrf_token() }}',
+        }, success: function(data) {
+            location.reload();
+        }
+    });
+});
+
+$('.cart__close a').click(function(e) {
+    e.preventDefault();
+
+    const pid = $(this).data('pid');
+    let url = "{{ Route('removeCartItem') }}";
+    $.ajax({
+        type: 'post',
+        url: url,
+        data: {
+            pid: pid,
+            _token: '{{ csrf_token() }}',
+        }, success: function(data) {
+            location.reload();
+        }
+    });
 });
 </script>
 @endsection

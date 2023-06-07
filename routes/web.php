@@ -25,6 +25,13 @@ Route::get('/clear-cart', [HomeController::class, 'clearCart'])->name('clearCart
 
 Route::post('/update-cart', [HomeController::class, 'updateCart'])->name('updateCart');
 
+Route::post('/remove-cart-item', [HomeController::class, 'removeCartItem'])
+        ->name('removeCartItem');
+
+Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
+
+Route::post('/save-cart', [HomeController::class, 'saveCart'])->name('saveCart');
+
 // y/c cần phải login
 Route::group(['middleware'=>'islogin'], function() {
 

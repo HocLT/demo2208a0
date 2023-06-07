@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\CartItem;
+use App\Models\Order;
+use App\Models\OrderDetail;
 
 class HomeController extends Controller
 {
@@ -70,5 +72,45 @@ class HomeController extends Controller
             $cart[$pids[$i]]->quantity = $qties[$i];
         }
         $request->session()->put('cart', $cart);    // lưu thay đổi
+    }
+
+    public function checkout()
+    {
+        return view('fe.checkout');
+    }
+
+    public function removeCartItem(Request $request) 
+    {
+        $pid = $request->pid;
+        $cart = $request->session()->get('cart');
+        unset($cart[$pid]);
+        $request->session()->put('cart', $cart);
+    }
+
+    public function saveCart(Request $request)
+    {
+        $uid = $request->uid;
+        
+        // tạo order
+        $ord = new Order();
+        $ord->user_id = $uid;
+        $ord->order_date = date('Y-m-y', time());
+        $ord->save();
+
+        // xử lý order details
+        $cart = $request->session()->get('cart');
+        $details = [];
+        foreach($cart as $item) {
+            $detail = new OrderDetail();
+            $detail->product_id = $item->product->id;
+            $detail->quantity = $item->quantity;
+            $detail->price = $item->product->price;
+            $details[] = $detail;
+        }
+
+        $ord->orderDetails()->saveMany($details);
+
+        $request->session()->forget('cart');
+        return redirect()->route('home');
     }
 }
