@@ -37,7 +37,8 @@ class HomeController extends Controller
             $prod = Product::find($pid);
             // tạo đối tượng CartItem
             $cartItem = new CartItem($prod, $quantity);
-            $cart[] = $cartItem;    // add to array
+            // fixed using associative array
+            $cart[$pid] = $cartItem;    // add to array, 
             $request->session()->put('cart', $cart);
             return 1;
         } catch (\Exception $e) {
@@ -54,8 +55,20 @@ class HomeController extends Controller
 
     public function viewCart(Request $request)
     {
-        if ($request->session()->has('cart')) {
-            return $request->session()->get('cart');
+        return view('fe.view_cart');
+        // if ($request->session()->has('cart')) {
+        //     return $request->session()->get('cart');
+        // }
+    }
+
+    public function updateCart(Request $request)
+    {
+        $pids = $request->pids;
+        $qties = $request->qties;
+        $cart = $request->session()->get('cart');
+        for ($i = 0; $i < count($pids); $i++) {
+            $cart[$pids[$i]]->quantity = $qties[$i];
         }
+        $request->session()->put('cart', $cart);    // lưu thay đổi
     }
 }

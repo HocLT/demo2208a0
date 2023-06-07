@@ -99,3 +99,26 @@
 </section>
 <!-- Latest Blog Section End -->
 @endsection
+
+@section('myjs')
+<script>
+    $('.product__item__text a').click(function(e) {
+        e.preventDefault(); // không chạy phần link của thẻ a
+        let pid = $(this).data('pid');
+        let quantity = 1;
+        // send ajax request using jquery
+        let url = "{{ Route('addCart') }}";
+        $.ajax({
+            type: 'post',
+            url: url,
+            data: {
+                pid: pid,
+                quantity: quantity,
+                _token: '{{ csrf_token() }}',
+            }, success: function(data) {
+                alert('Add product to cart successfully')
+            }
+        });
+    });
+</script>
+@endsection

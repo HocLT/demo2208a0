@@ -23,9 +23,13 @@ Route::get('/view-cart', [HomeController::class, 'viewCart'])->name('viewCart');
 
 Route::get('/clear-cart', [HomeController::class, 'clearCart'])->name('clearCart');
 
+Route::post('/update-cart', [HomeController::class, 'updateCart'])->name('updateCart');
 
 // y/c cần phải login
 Route::group(['middleware'=>'islogin'], function() {
+
+    
+
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
     // xử lý cho role admin
